@@ -1,5 +1,5 @@
 from collections import Counter,defaultdict
-
+from __future__ import division
 users = [
        { "id": 0, "name": "Hero" },
        { "id": 1, "name": "Dunn" },
@@ -15,3 +15,21 @@ users = [
 
 friendships = [(0, 1), (0, 2), (1, 2), (1, 3), (2, 3), (3, 4),
                   (4, 5), (5, 6), (5, 7), (6, 8), (7, 8), (8, 9)]
+
+for user in users:
+       user['friends'] = []
+
+for i,j in friendships:
+    users[i]['friends'].append(users[j])
+    users[j]['friends'].append(users[i])    
+def number_of_friends(user):
+    return len(user['friends'])
+
+total_connections = sum(number_of_friends(user) for user in users)
+num_users = len(users)
+avg_connections = total_connections /num_users
+num_friends_by_id = [(user['id'],number_of_friends(user)) for user in users]
+
+sorted(num_friends_by_id,key=lambda {user_id:num_friends}: num_friends,reverse=True)
+
+print(avg_connections)
